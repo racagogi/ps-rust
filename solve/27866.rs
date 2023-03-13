@@ -1,11 +1,12 @@
-use std::io::stdin;
+use std::error::Error;
+use std::io;
 
-fn main() {
-    let mut temp = String::new();
-    stdin().read_line(&mut temp).unwrap();
-    let chars:Vec<char> = temp.chars().collect();
-    let mut temp = String::new();
-    stdin().read_line(&mut temp).unwrap();
-    let n = temp.trim().parse::<usize>().unwrap();
-    println!("{}",chars[n-1]);
+fn main() -> Result<(), Box<dyn Error>> {
+    let buf = io::read_to_string(io::stdin())?;
+    let mut buf = buf.lines();
+    let mut input = || buf.next().unwrap();
+    let mut s = input().chars();
+    let i = input().parse::<usize>()?;
+    println!("{}", s.nth(i-1).unwrap());
+    Ok(())
 }
